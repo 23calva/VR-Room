@@ -55,24 +55,24 @@ public class Socket : MonoBehaviour
             this.transform.DetachChildren();
         }
 
-        if(child.gameObject == null)
-            return;
+        if (child.gameObject != null)
+        {
+            if (IsGrabbed(child.gameObject))
+            {
+                RemoveChild();
+                return;
+            }
 
-        if(IsGrabbed(child.gameObject))
-        {
-            RemoveChild();
-            return;
-        }
-
-        // Leap child to the center of the socket
-        float distance = Vector3.Distance(child.gameObject.transform.position, this.transform.position);
-        if(distance <= 0.001f)
-        {
-            child.gameObject.transform.position = this.transform.position;
-        }
-        else
-        {
-            child.gameObject.transform.position = Vector3.Lerp(child.gameObject.transform.position, this.transform.position, lerpSpeed * Time.deltaTime);
+            // Leap child to the center of the socket
+            float distance = Vector3.Distance(child.gameObject.transform.position, this.transform.position);
+            if (distance <= 0.001f)
+            {
+                child.gameObject.transform.position = this.transform.position;
+            }
+            else
+            {
+                child.gameObject.transform.position = Vector3.Lerp(child.gameObject.transform.position, this.transform.position, lerpSpeed * Time.deltaTime);
+            }
         }
     }
 
